@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <title>Register Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'login/css/index.css' %}" />
+</head>
+
+<body>
+    <div id="container">
+        <div id="messages">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="section" id="register">
+            <div class="text">
+                <p>First Name</p>
+                <p>Last Name</p>
+                <p>E-Mail</p>
+                <p>Password</p>
+                <p>Confirm Password</p>
+
+            </div>
+            <div class="fields">
+                <form action="/login/register" method="post">
+                    {% csrf_token %}
+                    <p>
+                        <input type="text" name="first_name" value=""></p>
+                    <p>
+                        <input type="text" name="last_name" value=""></p>
+                    <p><input type="email" name="email" value=""></p>
+                    <p>
+                        <input type="Password" name="password" value="password"></p>
+                    <p>
+                        <input type="Password" name="confirm_password" value="password"></p>
+                    <button type="submit3" name="submit3" value="submit3">Submit New Registration</button>
+                </form>
+            </div>
+        </div>
+        <div class="section" id="login" >
+            <div class="text" >
+                <p>
+                    E-Mail
+                </p>
+                <p>
+                    Password
+                    <p>
+            </div>
+
+            <div class="fields">
+                <form action="/login/login" method="post">
+                    {% csrf_token %}
+                    <p><input type="email" name="lemail" value=""></p>
+                    <p><input type="password" name="lpassword" value="password"></p>
+                    <button type="submit" name="submit" value="submit">Submit Login Credentials</button>
+                </form>
+
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

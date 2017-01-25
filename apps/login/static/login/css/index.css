@@ -1,0 +1,32 @@
+
+.section{
+  display: inline-block;
+  border: 5px rgb(43, 29, 134) solid;
+  vertical-align: top;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#messages{
+  width: 600px;
+
+}
+#register{
+  width: 300px;
+}
+#register input{
+
+}
+#login{
+  width: 275px;
+}
+.text{
+  display: inline-block;
+  width: 100px;
+  vertical-align: top
+}
+.fields{
+  display: inline-block;
+  width: 100px;
+  vertical-align: top
+}
