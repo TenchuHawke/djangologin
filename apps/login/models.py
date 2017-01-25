@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from django.db import models
 import bcrypt, re
 
-EMAIL_REGEX = re.compile(r'^[a-zA-z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+EMAIL_REGEX = re.compile(r'^[a-z0-9.+_-]+@[a-z0-9._-]+\.[a-z]+$')
 
 
 class UserManager(models.Manager):
@@ -21,9 +21,9 @@ class UserManager(models.Manager):
         if not postData['password'] == postData['confirm_password']:
             errors.append("Passwords do not match")
         if not EMAIL_REGEX.match(postData['email']):
-            errors.append('Must use a valid email')
+            errors.append('Must use a valid email, all lowercase please')
 
-        user = self.filter(email=postData['email'])
+        user = Users.objects.filter(email=postData['email'])
 
         if user:
             errors.append('E-mail already exists')
@@ -36,8 +36,8 @@ class UserManager(models.Manager):
         #Passed validation, save user
         else:
             hashed_password = bcrypt.hashpw(postData['password'].encode(), bcrypt.gensalt())
-            user=self.create(first_name=postData['first_name'], last_name=postData['last_name'], email=postData['email'], password=hashed_password)
-
+            Users.objects.create(first_name=postData['first_name'], last_name=postData['last_name'], email=postData['email'], password=hashed_password)
+            user=Users.objects.filter(email= postData['email'])
             modelResponse['status']=True
             modelResponse['user']=user
 
@@ -58,7 +58,7 @@ class UserManager(models.Manager):
                     errors.append('Invalid E-mail, password combination, try again')
                 else:
                     modelResponse['status']=True
-                    modelResponse['user_id']=user[0].id
+                    modelResponse['user']=user
             else:
                 errors.append('User not found, try another email or register a new account.')
         if errors:
@@ -68,6 +68,7 @@ class UserManager(models.Manager):
 
 
 class Users(models.Model):
+    id = models.AutoField(primary_key=True)
     email = models.CharField(max_length=60, unique=True)
     password = models.CharField(max_length=50)
     first_name = models.CharField(max_length=80)
